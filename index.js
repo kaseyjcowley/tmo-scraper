@@ -48,7 +48,9 @@ const sendMail = (screenshot) => {
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3419.0 Safari/537.36"
   );
-  await page.goto("https://www.t-mobile.com/cell-phone/oneplus-7-pro");
+  await page.goto("https://www.t-mobile.com/cell-phone/oneplus-7-pro", {
+    timeout: 0,
+  });
 
   const isInStock = await page.evaluate(() => {
     const stockText = document.querySelector("tmo-online-stock").textContent;
