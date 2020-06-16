@@ -59,7 +59,7 @@ const sendMail = (screenshot) => {
 
   const screenshot = await page.screenshot();
 
-  if (isInStock) {
+  if (isInStock || Boolean(Number(process.env.DRY_RUN))) {
     sendMail(screenshot);
   }
 
