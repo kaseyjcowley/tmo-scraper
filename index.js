@@ -41,6 +41,7 @@ const sendMail = (screenshot) => {
       width: 1280,
       height: 960,
     },
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
 
