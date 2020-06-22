@@ -1,8 +1,8 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const puppeteer = require("puppeteer");
-const nodemailer = require("nodemailer");
-const mg = require("nodemailer-mailgun-transport");
+const puppeteer = require('puppeteer');
+const nodemailer = require('nodemailer');
+const mg = require('nodemailer-mailgun-transport');
 
 const sendMail = (screenshot) => {
   const nodeMailerMailGun = nodemailer.createTransport(
@@ -16,12 +16,12 @@ const sendMail = (screenshot) => {
 
   nodeMailerMailGun.sendMail(
     {
-      from: "tmoscraper@example.com",
+      from: 'tmoscraper@example.com',
       to: process.env.MAIL_TO,
-      subject: "OnePlus 7 Pro Stock Alert",
+      subject: 'OnePlus 7 Pro Stock Alert',
       text:
-        "Looks like the OnePlus 7 Pro just came back in stock at T-Mobile! Better go check it out: https://www.t-mobile.com/cell-phone/oneplus-7-pro",
-      attachments: [{filename: "screenshot.png", content: screenshot}],
+        'Looks like the OnePlus 7 Pro just came back in stock at T-Mobile! Better go check it out: https://www.t-mobile.com/cell-phone/oneplus-7-pro',
+      attachments: [{filename: 'screenshot.png', content: screenshot}],
     },
     (err, info) => {
       if (err) {
@@ -35,22 +35,25 @@ const sendMail = (screenshot) => {
 
 (async () => {
   const browser = await puppeteer.launch({
-    headless: process.env.NODE_ENV === "production",
-    devtools: process.env.NODE_ENV === "development",
+    headless: process.env.NODE_ENV === 'production',
+    devtools: process.env.NODE_ENV === 'development',
     defaultViewport: {
       width: 1280,
       height: 960,
     },
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
   const page = await browser.newPage();
 
   await page.setUserAgent(
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3419.0 Safari/537.36"
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3419.0 Safari/537.36'
   );
-  await page.goto("https://www.t-mobile.com/cell-phone/oneplus-7-pro", {
-    timeout: 0,
-  });
+  const response = await page.goto(
+    'https://www.t-mobile.com/cell-phone/oneplus-7-pro',
+    {
+      timeout: 0,
+    }
+  );
 
   // If we're redirected to here, then the OnePlus 7 Pro is still out of stock :(
   if (response.url().endsWith('/cell-phones/brand/oneplus')) {
