@@ -52,16 +52,14 @@ const sendMail = (screenshot) => {
     timeout: 0,
   });
 
-  const isInStock = await page.evaluate(() => {
-    const stockText = document.querySelector("tmo-online-stock").textContent;
-    return !/out of stock/i.test(stockText);
-  });
+  // If we're redirected to here, then the OnePlus 7 Pro is still out of stock :(
+  if (response.url().endsWith('/cell-phones/brand/oneplus')) {
+    return;
+  }
 
   const screenshot = await page.screenshot();
 
-  if (isInStock || Boolean(Number(process.env.DRY_RUN))) {
-    sendMail(screenshot);
-  }
+  sendMail(screenshot);
 
   await browser.close();
 })();
