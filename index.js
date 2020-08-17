@@ -80,7 +80,7 @@ ${partials
       .map((row) => {
         const normalizedRow = row.textContent.replace(/\s{2,}/g, " ");
         const listingRowBatteryMatch = normalizedRow.match(
-          /(\d{2,3})%\s(?:battery|🔋)/
+          /(\d{2,3})%\s(?:battery|🔋)/i
         );
 
         if (listingRowBatteryMatch) {
